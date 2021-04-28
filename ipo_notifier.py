@@ -46,7 +46,7 @@ class IpoNotifierSpider(scrapy.Spider):
                 # Notify if company does not exists in existing csv file  and day before ipo openinig date and in the opening date
                 # it notifies twice 1.day before ipo opening date and 2.on the opening date
 
-                if (Company in data.Company.tolist()) == False and ((Opening_Date == str(datetime.date.today() + datetime.timedelta(days = 1)))
+                if (Company in data.Company.tolist()) == False and ((Opening_Date == str(datetime.date.today() + datetime.timedelta(days = 2)))
                 or  (current_date == Opening_Date)):
                     #appending new IPO in existing csv file
 
