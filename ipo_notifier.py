@@ -46,8 +46,8 @@ class IpoNotifierSpider(scrapy.Spider):
                 Closing_Date = info.xpath(".//td[7]/text()").get().strip()
 
 
-                # Notify if company does not exists in existing csv file  and day before ipo openinig date and in the opening date
-                # it notifies twice 1.day before ipo opening date and 2.on the opening date
+                # Notify on day before ipo openinig date and on the opening date
+                
 
                 if Opening_Date == str(datetime.date.today() + datetime.timedelta(days = 1))
                 or  current_date == Opening_Date:
@@ -71,8 +71,7 @@ class IpoNotifierSpider(scrapy.Spider):
 
                     yield ipo_data
 
-                    EMAIL_ADDRESS = 'kce074bct020@gmail.com'
-                    EMAIL_PASSWORD = "khwopacollege9849"
+                    
 
                     msg = EmailMessage()
                     msg['Subject'] = "New IPO Information"
