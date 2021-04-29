@@ -49,8 +49,7 @@ class IpoNotifierSpider(scrapy.Spider):
                 # Notify on day before ipo openinig date and on the opening date
                 
 
-                if Opening_Date == str(datetime.date.today() + datetime.timedelta(days = 1))
-                or  current_date == Opening_Date:
+                if (Opening_Date == str(datetime.date.today() + datetime.timedelta(days = 1))) or (current_date == Opening_Date):
                     
                     if Company in data.Company.tolist() == True:
                         continue
