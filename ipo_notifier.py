@@ -51,42 +51,45 @@ class IpoNotifierSpider(scrapy.Spider):
 
                 if Opening_Date == str(datetime.date.today() + datetime.timedelta(days = 1))
                 or  current_date == Opening_Date:
-                    #appending new IPO in existing csv file
-
-                    ipo_data = {
-                    'Company' : info.xpath(".//td/a/@title").get(),
-                    'Symbol' : info.xpath(".//td/a/text()").get(),
-                    'Units' : info.xpath(".//td[@class= 'text-center'][1]/text()").get(),
-                    'Unit_Price' : info.xpath(".//td[@class= 'text-center'][2]/text()").get(),
-                    'Opening_Date' : info.xpath(".//td[6]/text()").get().strip(),
-                    'Closing_Date' : info.xpath(".//td[7]/text()").get().strip()
-                    }
-
-
-                    ipo_str = '\n'.join([f'{key}: {value}' for key, value in ipo_data.items()])
-
-                    message = f"This Email is to Notify you to apply in the new IPO.\n\nIPO Details:\n{ipo_str}\n\nYours Always,\nLaxman Maharjan"
-
-                    data1 = data.append(ipo_data,ignore_index=True).sort_values(by = "Opening_Date", ascending = False)
-
-                    yield ipo_data
-
                     
+                    if Company in data.Company.tolist() == True:
+                        continue
+                    #appending new IPO in existing csv file
+                    else:
+                        ipo_data = {
+                        'Company' : info.xpath(".//td/a/@title").get(),
+                        'Symbol' : info.xpath(".//td/a/text()").get(),
+                        'Units' : info.xpath(".//td[@class= 'text-center'][1]/text()").get(),
+                        'Unit_Price' : info.xpath(".//td[@class= 'text-center'][2]/text()").get(),
+                        'Opening_Date' : info.xpath(".//td[6]/text()").get().strip(),
+                        'Closing_Date' : info.xpath(".//td[7]/text()").get().strip()
+                        }
 
-                    msg = EmailMessage()
-                    msg['Subject'] = "New IPO Information"
-                    msg['From'] = EMAIL_ADDRESS
-                    msg['To'] = ', '.join(receivers_list)
 
-                    msg.set_content(message)
+                        ipo_str = '\n'.join([f'{key}: {value}' for key, value in ipo_data.items()])
 
+                        message = f"This Email is to Notify you to apply in the new IPO.\n\nIPO Details:\n{ipo_str}\n\nYours Always,\nLaxman Maharjan"
 
-                    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-                        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-                        smtp.send_message(msg)
+                        data1 = data.append(ipo_data,ignore_index=True).sort_values(by = "Opening_Date", ascending = False)
+
+                        yield ipo_data
 
 
-                    data1.to_csv("IPO_Infos.csv",index=False)
+
+                        msg = EmailMessage()
+                        msg['Subject'] = "New IPO Information"
+                        msg['From'] = EMAIL_ADDRESS
+                        msg['To'] = ', '.join(receivers_list)
+
+                        msg.set_content(message)
+
+
+                        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                            smtp.send_message(msg)
+
+
+                        data1.to_csv("IPO_Infos.csv",index=False)
 
 if __name__=='__main__':
     #run spider
