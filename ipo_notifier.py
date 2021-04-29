@@ -7,8 +7,11 @@ from scrapy.crawler import CrawlerProcess
 from email.message import EmailMessage
 
 data = pd.read_csv("IPO_Infos.csv")
+receivers = pd.read_csv("Receivers.csv")
+
 current_date = str(datetime.date.today())
 
+receivers_list = receivers.iloc[:, 2].tolist()
 
 class IpoNotifierSpider(scrapy.Spider):
     name = 'Ipo_Notifier'
@@ -74,7 +77,7 @@ class IpoNotifierSpider(scrapy.Spider):
                     msg = EmailMessage()
                     msg['Subject'] = "New IPO Information"
                     msg['From'] = EMAIL_ADDRESS
-                    msg['To'] = 'lxmnmrzn@gmail.com'
+                    msg['To'] = ', '.join(receivers_list)
 
                     msg.set_content(message)
 
