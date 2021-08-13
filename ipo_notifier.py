@@ -7,7 +7,7 @@ import os
 from scrapy.crawler import CrawlerProcess
 from email.message import EmailMessage
 
-data = pd.read_csv("IPO_Infos.csv")
+#data = pd.read_csv("IPO_Infos.csv")
 receivers = pd.read_csv("Receivers.csv")
 
 current_date = str(datetime.date.today())
@@ -35,7 +35,8 @@ class IpoNotifierSpider(scrapy.Spider):
         """
         This function scrapes all the required information about the IPOs
         """
-
+        data = pd.read_csv("IPO_Infos.csv")
+        
         for i in range(1,6):
             for info in response.xpath(f"//div[@id='myTableEip']/table/tbody/tr[{i}]"):
 
@@ -87,11 +88,15 @@ class IpoNotifierSpider(scrapy.Spider):
                         smtp.send_message(msg)
                         
                     #appending new IPO in existing csv file
-                    if Company in data.Company.tolist() == True:
-                        continue
-                    else:
+#                     if Company in data.Company.tolist() == True:
+#                         continue
+#                     else:
+#                         data1.to_csv("IPO_Infos.csv",index=False)
+                    
+                    if Company in data.Company.tolist() == False:
                         data1.to_csv("IPO_Infos.csv",index=False)
 
+                
 if __name__=='__main__':
     #run spider
     process = CrawlerProcess()
