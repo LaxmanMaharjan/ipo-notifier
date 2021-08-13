@@ -43,5 +43,6 @@ jobs:
           git diff
           git config --global user.email "ipo-bot@example.com"
           git config --global user.name "IPO-bot"
+          git pull
           git diff --quiet || (git add IPO_Infos.csv && git commit -m "Adding New IPO")
           git push origin HEAD:master
