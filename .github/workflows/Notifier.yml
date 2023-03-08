@@ -11,8 +11,7 @@ on:
     branches: [ master ]
     
   schedule:
-    #- cron: '*/5 * * * *' 
-    - cron: '15 3 * * *' # runs at 3:15 UTC and 9:00  Nepalese Time everyday.
+    - cron: '0 10 * * *' # runs at 4:15 UTC and 10:00  Nepalese Time everyday.
 
 jobs:
   build:
@@ -35,6 +34,7 @@ jobs:
         env: 
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          IPO_NOTIFIER_BACKEND: ${{secretes.IPO_NOTIFIER_BACKEND}}
         
         run: python ipo_notifier.py
           
