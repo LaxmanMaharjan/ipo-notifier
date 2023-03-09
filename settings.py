@@ -1,0 +1,5 @@
+import os
+
+EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+IPO_NOTIFIER_BACKEND = os.environ.get('IPO_NOTIFIER_BACKEND')

@@ -43,7 +43,7 @@ class IpoNotifierSpider(scrapy.Spider):
 
     def send_mail_on_opening_date(self, info:str, opening_date: str):
 
-        if (opening_date == str(datetime.date.today() + datetime.timedelta(days = 1))) or (current_date == opening_date):
+        if (opening_date == str(datetime.date.today() + datetime.timedelta(days = 1))) or (self.current_date == opening_date):
             ipo_data,ipo_str = self.create_ipo_message(info=info)
             yield ipo_data
             email_service = EmailService(ipo_str)
